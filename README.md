@@ -14,7 +14,7 @@ TLEデータをもとに衛星の現在位置を計算し、3D地球上にリア
 - 将来的に可視窓計算、軌道予測、コンステレーション表示に対応予定
 
 ## 技術スタック
-- Next.js
+- React + Vite
 - TypeScript
 - Three.js
 - satellite.js
