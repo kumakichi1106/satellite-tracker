@@ -1,4 +1,8 @@
-import * as satellite from 'satellite.js';
+import {
+    propagate, gstime, twoline2satrec,
+    eciToGeodetic, degreesLong, degreesLat, PositionAndVelocity
+} from "satellite.js";
+
 
 import type { SatellitePosition } from '../dataModel/satellitePosition';
 import type { TleRecord } from '../dataModel/tle';
@@ -8,19 +12,19 @@ export function calculateSatellitePosition(
   tleRecord: TleRecord,
   date = new Date(),
 ): SatellitePosition | null {
-  const satrec = satellite.twoline2satrec(tleRecord.line1, tleRecord.line2);
-  const positionAndVelocity = satellite.propagate(satrec, date);
+  const satrec = twoline2satrec(tleRecord.line1, tleRecord.line2);
+  const positionAndVelocity = propagate(satrec, date);
 
   if (!positionAndVelocity || typeof positionAndVelocity.position !== 'object') {
     return null;
   }
 
-  const gmst = satellite.gstime(date);
-  const positionGd = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
+  const gmst = gstime(date);
+  const positionGd = eciToGeodetic(positionAndVelocity.position, gmst);
 
   return {
-    latitude: satellite.degreesLat(positionGd.latitude),
-    longitude: satellite.degreesLong(positionGd.longitude),
+    latitude: degreesLat(positionGd.latitude),
+    longitude: degreesLong(positionGd.longitude),
     altitudeKm: positionGd.height,
   };
 }
