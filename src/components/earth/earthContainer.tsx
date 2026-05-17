@@ -1,5 +1,5 @@
-import { Globe } from './globe';
+import { Earth } from './earth';
 
-export function GlobeContainer() {
-  return <Globe />;
+export function EarthContainer() {
+  return <Earth />;
 }

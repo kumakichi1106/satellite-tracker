@@ -1,1 +1,1 @@
-export { GlobeContainer } from './globeContainer';
+export { EarthContainer } from './earthContainer';

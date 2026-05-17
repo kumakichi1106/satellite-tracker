@@ -1,3 +1,3 @@
-export function Globe() {
+export function Earth() {
   return null;
 }
