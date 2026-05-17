@@ -1,5 +1,14 @@
+import { useTleRecords } from '../../hooks/useTleRecords';
 import { Satellite } from './satellite';
 
 export function SatelliteContainer() {
-  return <Satellite />;
+  const { records, isLoading, errorMessage } = useTleRecords();
+
+  return (
+    <Satellite
+      tleRecord={records}
+      isLoading={isLoading}
+      errorMessage={errorMessage}
+    />
+  );
 }
