@@ -56,7 +56,6 @@
 // }
 
 
-
 import type { TleRecord } from '../dataModel/tle';
 
 type FetchTleRecordsParams = {
@@ -67,12 +66,14 @@ type FetchTleRecordsParams = {
 const satellites: TleRecord[] = [
   {
     name: 'ISS (ZARYA)',
-    line1: '1 25544U 98067A 26137.03684517 .00005133 00000+0 10043-3 0 9995',
-    line2: '2 25544 51.6321 94.3035 0007556 67.0843 293.0943 15.49238964 566924',
+    line1: '1 25544U 98067A   26137.03684517  .00005133  00000+0  10043-3 0  9995',
+    line2: '2 25544  51.6321  94.3035 0007556  67.0843 293.0943 15.49238964566924',
   },
 ];
-
 // 開発中はCelesTrakを直接叩かず、固定TLEを返す。
 export async function fetchTleRecords(_params: FetchTleRecordsParams): Promise<TleRecord[]> {
+
+
   return satellites;
 }
+

@@ -1,13 +1,13 @@
-import type { TleRecord } from '../../dataModel/tle';
+import type { TleRecordWithPosition } from '../../dataModel/satellitePosition';
 
 type SatelliteProps = {
-  tleRecord: TleRecord[];
+  satellites: TleRecordWithPosition[];
   isLoading: boolean;
   errorMessage: string | null;
 };
 
 export function Satellite({
-  tleRecord,
+  satellites,
   isLoading,
   errorMessage,
 }: SatelliteProps) {
@@ -19,23 +19,41 @@ export function Satellite({
     return <p className="errorText">{errorMessage}</p>;
   }
 
-  if (tleRecord.length === 0) {
-    return <p className="statusText">TLE data is empty.</p>;
+  if (satellites.length === 0) {
+    return <p className="statusText">Data is empty.</p>;
   }
 
   return (
     <div>
-      {tleRecord.map((record) => (
-        <div className="mb-4 p-4 border rounded" key={record.name}>
+      {satellites.map(({ tleRecord, position }) => (
+        <div className="mb-4 p-4 border rounded" key={tleRecord.name}>
           <div className="text-xl font-semibold">
-            {record.name}
+            {tleRecord.name}
           </div>
           <div className="bg-gray-100 p-2 rounded mt-2">
-            {record.line1}
+            {tleRecord.line1}
           </div>
           <div className="bg-gray-100 p-2 rounded mt-2">
-            {record.line2}
+            {tleRecord.line2}
           </div>
+          {position ? (
+            <div className="positionList">
+              <div>
+                <div>緯度</div>
+                <div>{position.latitude}</div>
+              </div>
+              <div>
+                <div>経度</div>
+                <div>{position.longitude}</div>
+              </div>
+              <div>
+                <div>高度</div>
+                <div>{position.altitudeKm} km</div>
+              </div>
+            </div>
+          ) : (
+            <p className="statusText">位置情報を取得できません。</p>
+          )}
         </div>
       ))}
     </div>
