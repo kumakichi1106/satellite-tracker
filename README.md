@@ -3,7 +3,20 @@
 TLEデータをもとに衛星の現在位置を計算し、3D地球上にリアルタイム表示するWebアプリケーション
 
 ## デモ
-デプロイURL / スクリーンショット / GIF
+
+
+## 開発
+
+```bash
+yarn install
+yarn dev
+```
+
+## ビルド
+
+```bash
+yarn build
+```
 
 ## 予定機能
 - CelesTrakからTLEデータを取得
