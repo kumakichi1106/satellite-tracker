@@ -4,4 +4,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: '/satellite-tracker/',
   plugins: [react()],
+  worker: {
+    format: 'es',
+  },
+
+  build: {
+
+    target: 'es2022', 
+  },
 });
