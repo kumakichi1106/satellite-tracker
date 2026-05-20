@@ -2,13 +2,14 @@ import { SatelliteInfo } from './SatelliteInfo';
 import { useSatelliteTracker } from '../../contexts/satelliteTrackerContext';
 
 export function SatelliteInfoContainer() {
-  const { satellites, isLoading, errorMessage } = useSatelliteTracker();
+  const { selectedSatellite, isLoading, errorMessage, clearSelectedSatellite } = useSatelliteTracker();
 
   return (
     <SatelliteInfo
-      satellites={satellites}
+      satellites={selectedSatellite}
       isLoading={isLoading}
       errorMessage={errorMessage}
+      onClose={clearSelectedSatellite}
     />
   );
 }

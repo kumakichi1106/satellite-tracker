@@ -1,12 +1,15 @@
 type SatelliteMarkerProps = {
   position: [number, number, number];
+  isSelected: boolean;
+  onClick: () => void;
 };
 
-export function SatelliteMarker({ position }: SatelliteMarkerProps) {
+export function SatelliteMarker({ position, isSelected, onClick }: SatelliteMarkerProps) {
   return (
-    <mesh position={position}>
-      <sphereGeometry args={[0.02, 16, 16]} />
-      <meshBasicMaterial color="red" />
+    // 衛星マーカーの描画
+    <mesh position={position} onClick={onClick}>
+      <sphereGeometry args={isSelected ?[0.06, 16, 16] : [0.04, 16, 16]} />
+      <meshBasicMaterial color={isSelected ? 'yellow' : 'red'} />
     </mesh>
   );
 }
