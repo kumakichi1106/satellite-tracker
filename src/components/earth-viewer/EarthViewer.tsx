@@ -39,7 +39,6 @@ export function EarthViewer({
         {satellites.map(({ tleRecord, vector3 }) => {
           if (!vector3) return null;
           return (
-            // 衛星マーカーの描画
             <SatelliteMarker
               key={tleRecord.name}
               position={[vector3.x, vector3.y, vector3.z]}
