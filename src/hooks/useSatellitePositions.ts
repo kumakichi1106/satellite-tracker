@@ -6,12 +6,13 @@ import {
   convertSatellitePositionToVector3,
 } from '../domain/satellitePosition';
 
-export function useSatellitePositions(tleRecords: TleRecord[]): TleRecordWithPosition[] {
+export function useSatellitePositions(
+  tleRecords: TleRecord[],
+  date: Date,
+): TleRecordWithPosition[] {
   return useMemo(() => {
-    const calculatedAt = new Date();
-
     return tleRecords.map((tleRecord) => {
-      const position = calculateSatellitePosition(tleRecord, calculatedAt);
+      const position = calculateSatellitePosition(tleRecord, date);
 
       return {
         tleRecord,
@@ -19,5 +20,5 @@ export function useSatellitePositions(tleRecords: TleRecord[]): TleRecordWithPos
         vector3: position ? convertSatellitePositionToVector3(position) : null,
       };
     });
-  }, [tleRecords]);
+  }, [tleRecords, date]);
 }

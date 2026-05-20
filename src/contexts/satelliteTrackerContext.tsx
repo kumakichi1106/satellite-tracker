@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useTleRecords } from '../hooks/useTleRecords';
 import { useSatellitePositions } from '../hooks/useSatellitePositions';
+import { useCurrentTime } from '../hooks/useCurrentTime';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 
 type SatelliteTrackerContextValue = {
@@ -26,10 +27,13 @@ type SatelliteTrackerProviderProps = {
 const SatelliteTrackerContext = createContext<SatelliteTrackerContextValue | null>(null);
 
 export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderProps) {
+    const currentTime = useCurrentTime(1000);
     const { records, isLoading, errorMessage } = useTleRecords();
-    const satellites = useSatellitePositions(records);
+    // CurrentTimeで都度衛星の位置を計算する
+    const satellites = useSatellitePositions(records, currentTime);
     // 選択された衛星の状態管理
     const [selectedSatelliteName, setSelectedSatelliteName] = useState<string | null>(null);
+
     // 衛星を選択
     const selectSatellite = (name: string) => {
         setSelectedSatelliteName(name);
