@@ -1,10 +1,8 @@
-import { useSatellitePositions } from '../../hooks/useSatellitePositions';
-import { useTleRecords } from '../../hooks/useTleRecords';
 import { SatelliteInfo } from './SatelliteInfo';
+import { useSatelliteTracker } from '../../contexts/satelliteTrackerContext';
 
 export function SatelliteInfoContainer() {
-  const { records, isLoading, errorMessage } = useTleRecords();
-  const satellites = useSatellitePositions(records);
+  const { satellites, isLoading, errorMessage } = useSatelliteTracker();
 
   return (
     <SatelliteInfo

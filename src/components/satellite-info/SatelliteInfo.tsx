@@ -11,17 +11,9 @@ export function SatelliteInfo({
   isLoading,
   errorMessage,
 }: SatelliteInfoProps) {
-  if (isLoading) {
-    return <p className="statusText">Loading...</p>;
-  }
-
-  if (errorMessage) {
-    return <p className="errorText">{errorMessage}</p>;
-  }
-
-  if (satellites.length === 0) {
-    return <p className="statusText">Data is empty.</p>;
-  }
+  if (isLoading) return <p className="statusText">Loading...</p>;
+  if (errorMessage) return <p className="errorText">{errorMessage}</p>;
+  if (satellites.length === 0) return <p className="statusText">Data is empty.</p>;
 
   return (
     <div>

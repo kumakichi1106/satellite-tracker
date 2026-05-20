@@ -1,10 +1,8 @@
-import { useSatellitePositions } from '../../hooks/useSatellitePositions';
-import { useTleRecords } from '../../hooks/useTleRecords';
 import { EarthViewer } from './EarthViewer';
+import { useSatelliteTracker } from '../../contexts/satelliteTrackerContext';
 
 export function EarthViewerContainer() {
-  const { records } = useTleRecords();
-  const satellites = useSatellitePositions(records);
+  const { satellites } = useSatelliteTracker();
 
   return <EarthViewer satellites={satellites} />;
 }
