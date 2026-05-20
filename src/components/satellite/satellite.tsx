@@ -30,10 +30,10 @@ export function Satellite({
           <div className="text-xl font-semibold">
             {tleRecord.name}
           </div>
-          <div className="bg-gray-100 p-2 rounded mt-2">
+          <div className="p-2 rounded mt-2">
             {tleRecord.line1}
           </div>
-          <div className="bg-gray-100 p-2 rounded mt-2">
+          <div className="p-2 rounded mt-2">
             {tleRecord.line2}
           </div>
           {position ? (
