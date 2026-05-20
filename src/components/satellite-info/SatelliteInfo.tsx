@@ -1,16 +1,16 @@
 import type { TleRecordWithPosition } from '../../dataModel/satellitePosition';
 
-type SatelliteProps = {
+type SatelliteInfoProps = {
   satellites: TleRecordWithPosition[];
   isLoading: boolean;
   errorMessage: string | null;
 };
 
-export function Satellite({
+export function SatelliteInfo({
   satellites,
   isLoading,
   errorMessage,
-}: SatelliteProps) {
+}: SatelliteInfoProps) {
   if (isLoading) {
     return <p className="statusText">Loading...</p>;
   }

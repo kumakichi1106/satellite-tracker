@@ -1,1 +1,0 @@
-export { EarthContainer } from './earthContainer';

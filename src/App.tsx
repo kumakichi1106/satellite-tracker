@@ -1,12 +1,12 @@
-import { Earth } from './components/earth/earth';
-import { SatelliteContainer } from './components/satellite';
+import { EarthViewerContainer } from './components/earth-viewer';
+import { SatelliteInfoContainer } from './components/satellite-info';
 
 export function App() {
   return (
     <main className="app">
       <h1>Satellite Tracker</h1>
-      <SatelliteContainer />
-      <Earth />
+      <SatelliteInfoContainer />
+      <EarthViewerContainer />
     </main>
   );
 }
