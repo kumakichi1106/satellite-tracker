@@ -23,7 +23,6 @@ yarn build
 ```text
 src/
   components/
-    tracker/
     earth-viewer/
     satellite-info/
     satellite-marker/
@@ -46,7 +45,7 @@ src/
 ## 技術スタック
 - React + Vite
 - TypeScript
-- Three.js
+- ReactThreeFiber
 - satellite.js
 - Tailwind CSS
 - CelesTrak API
