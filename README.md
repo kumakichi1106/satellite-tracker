@@ -18,6 +18,24 @@ yarn dev
 yarn build
 ```
 
+## フォルダ構成
+
+```text
+src/
+  components/
+    tracker/
+    earth-viewer/
+    satellite-info/
+    satellite-marker/
+  constants/
+  dataModel/
+  domain/
+  hooks/
+  infrastructure/
+  types/
+  utils/
+```
+
 ## 機能
 - CelesTrakからTLEデータを取得
 - satellite.jsで衛星位置を計算
