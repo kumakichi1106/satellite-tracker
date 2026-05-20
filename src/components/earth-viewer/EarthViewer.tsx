@@ -29,13 +29,12 @@ export function EarthViewer({
           position: [0, 0, 14],
           fov: 45,
         }}>
-        // 地球の描画
-        <mesh rotation={[0.6, -Math.PI * 1.28, 0]}> // 日本が正面に来るように設定
-          <sphereGeometry args={[5, 64, 64]} /> // 地球のサイズと解像度
-          <meshPhongMaterial map={map} /> // 地球のテクスチャ
+        <mesh rotation={[0.6, -Math.PI * 1.28, 0]}>
+          <sphereGeometry args={[5, 64, 64]} />
+          <meshPhongMaterial map={map} />
         </mesh>
-        <ambientLight intensity={1.8} /> // 明るさの調整
-        <directionalLight position={[5, 5, 5]} intensity={2.5} /> // 光源の位置（暫定）
+        <ambientLight intensity={1.8} />
+        <directionalLight position={[5, 5, 5]} intensity={2.5} />
         <CameraControls minDistance={7} maxDistance={30} />
         {satellites.map(({ tleRecord, vector3 }) => {
           if (!vector3) return null;
