@@ -659,5 +659,4 @@ export const mockTleRecordsByGroup: Record<TleGroupKey, TleRecord[]> = {
   stations: mockStationsTleRecords,
   weather: mockWeatherTleRecords,
   'gps-ops': mockGpsOperationalTleRecords,
-  active: mockStationsTleRecords,
 };

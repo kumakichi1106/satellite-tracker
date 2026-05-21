@@ -1,4 +1,4 @@
-export type TleGroupKey = 'stations' | 'active' | 'weather' | 'gps-ops';
+export type TleGroupKey = 'stations' | 'weather' | 'gps-ops';
 
 export type TleGroup = {
   key: TleGroupKey;
