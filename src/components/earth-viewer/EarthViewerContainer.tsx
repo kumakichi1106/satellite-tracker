@@ -5,6 +5,7 @@ export function EarthViewerContainer() {
   const {
     satellites,
     selectedSatelliteName,
+    selectedOrbitPrediction,
     selectSatellite,
     clearSelectedSatellite
   } = useSatelliteTracker();
@@ -14,5 +15,6 @@ export function EarthViewerContainer() {
       selectedSatelliteName={selectedSatelliteName}
       onSelectSatellite={selectSatellite}
       onClearSelectedSatellite={clearSelectedSatellite}
+      selectedOrbitPrediction={selectedOrbitPrediction}
   />;
 }

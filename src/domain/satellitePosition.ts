@@ -28,7 +28,7 @@ export function calculateSatellitePosition(
     altitudeKm: positionGd.height,
   };
 }
-
+// 緯度・経度・高度を、EarthViewerの球体半径に合わせたThree.jsで使用する座標へ変換する。
 export function convertSatellitePositionToVector3({
   latitude,
   longitude,

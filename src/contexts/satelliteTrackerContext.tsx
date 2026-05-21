@@ -8,12 +8,15 @@ import {
 import { useTleRecords } from '../hooks/useTleRecords';
 import { useSatellitePositions } from '../hooks/useSatellitePositions';
 import { useCurrentTime } from '../hooks/useCurrentTime';
+import { useOrbitPrediction } from '../hooks/useOrbitPrediction';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
+import type { OrbitPrediction } from '../dataModel/orbitPrediction';
 
 type SatelliteTrackerContextValue = {
     satellites: TleRecordWithPosition[];
     selectedSatellite: TleRecordWithPosition | null;
     selectedSatelliteName: string | null;
+    selectedOrbitPrediction: OrbitPrediction | null;
     selectSatellite: (name: string) => void;
     clearSelectedSatellite: () => void;
     isLoading: boolean;
@@ -48,10 +51,13 @@ export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderP
         [satellites, selectedSatelliteName],
     );
 
+    const selectedOrbitPrediction = useOrbitPrediction(selectedSatellite);
+
     const value: SatelliteTrackerContextValue = {
         satellites,
         selectedSatellite,
         selectedSatelliteName,
+        selectedOrbitPrediction,
         selectSatellite,
         clearSelectedSatellite,
         isLoading,

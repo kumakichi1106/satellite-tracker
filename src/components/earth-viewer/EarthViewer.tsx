@@ -2,11 +2,14 @@ import * as THREE from 'three';
 import { Canvas, useLoader } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { SatelliteMarker } from "../satellite-marker";
+import { OrbitLine } from "../orbit-line";
 import type { TleRecordWithPosition } from '../../dataModel/satellitePosition';
+import type { OrbitPrediction } from '../../dataModel/orbitPrediction';
 
 type EarthViewerProps = {
   satellites: TleRecordWithPosition[];
   selectedSatelliteName: string | null;
+  selectedOrbitPrediction: OrbitPrediction | null;
   onSelectSatellite: (name: string) => void;
   onClearSelectedSatellite: () => void;
 
@@ -16,6 +19,7 @@ type EarthViewerProps = {
 export function EarthViewer({
   satellites,
   selectedSatelliteName,
+  selectedOrbitPrediction,
   onSelectSatellite,
   onClearSelectedSatellite
 }: EarthViewerProps) {
@@ -47,6 +51,9 @@ export function EarthViewer({
             />
           );
         })}
+        {selectedOrbitPrediction && (
+          <OrbitLine points={selectedOrbitPrediction.points} />
+        )}
       </Canvas>
 
     </div>
