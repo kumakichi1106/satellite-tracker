@@ -11,14 +11,17 @@ import { useCurrentTime } from '../hooks/useCurrentTime';
 import { useOrbitPrediction } from '../hooks/useOrbitPrediction';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 import type { OrbitPrediction } from '../dataModel/orbitPrediction';
+import { TleGroupKey } from '../constants/tleGroups';
 
 type SatelliteTrackerContextValue = {
     satellites: TleRecordWithPosition[];
     selectedSatellite: TleRecordWithPosition | null;
     selectedSatelliteName: string | null;
     selectedOrbitPrediction: OrbitPrediction | null;
+    selectedTleGroup: TleGroupKey;
     selectSatellite: (name: string) => void;
     clearSelectedSatellite: () => void;
+    setSelectedTleGroup: (group: TleGroupKey) => void;
     isLoading: boolean;
     errorMessage: string | null;
 };
@@ -31,7 +34,8 @@ const SatelliteTrackerContext = createContext<SatelliteTrackerContextValue | nul
 
 export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderProps) {
     const currentTime = useCurrentTime(1000);
-    const { records, isLoading, errorMessage } = useTleRecords();
+    const [selectedTleGroup, setSelectedTleGroup] = useState<TleGroupKey>('stations');
+    const { records, isLoading, errorMessage } = useTleRecords(selectedTleGroup );
     // CurrentTimeで都度衛星の位置を計算する
     const satellites = useSatellitePositions(records, currentTime);
     // 選択された衛星の状態管理
@@ -58,6 +62,8 @@ export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderP
         selectedSatellite,
         selectedSatelliteName,
         selectedOrbitPrediction,
+        selectedTleGroup,
+        setSelectedTleGroup,
         selectSatellite,
         clearSelectedSatellite,
         isLoading,

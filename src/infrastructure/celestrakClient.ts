@@ -1,12 +1,13 @@
 import { CELESTRAK_BASE_URL } from '../constants/celestrak';
+import { TleGroupKey } from '../constants/tleGroups';
 import type { TleRecord } from '../dataModel/tle';
-import { mockStationsTleRecords } from './mockTleRecords';
+import { mockTleRecordsByGroup } from './mockTleRecords';
 
 // CelesTrakは短時間の過剰アクセスでIP制限されるため、開発中はモックTLEを使用
 const USE_MOCK_TLE = true;
 
 type FetchTleRecordsParams = {
-  group: string;
+  group: TleGroupKey;
   // fetchキャンセル用
   signal?: AbortSignal;
 };
@@ -16,7 +17,7 @@ export async function fetchTleRecords({
   group, signal,
 }: FetchTleRecordsParams): Promise<TleRecord[]> {
   if (USE_MOCK_TLE) {
-    return mockStationsTleRecords;
+    return mockTleRecordsByGroup[group];
   }
   
   const response = await fetch(setTleUrl(group), { signal });

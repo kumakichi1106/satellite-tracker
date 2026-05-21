@@ -12,9 +12,7 @@ type EarthViewerProps = {
   selectedOrbitPrediction: OrbitPrediction | null;
   onSelectSatellite: (name: string) => void;
   onClearSelectedSatellite: () => void;
-
 };
-
 
 export function EarthViewer({
   satellites,
@@ -55,7 +53,6 @@ export function EarthViewer({
           <OrbitLine points={selectedOrbitPrediction.points} />
         )}
       </Canvas>
-
     </div>
   );
 }

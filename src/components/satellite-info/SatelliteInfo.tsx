@@ -25,7 +25,7 @@ export function SatelliteInfo({
 
   return (
     // 衛星の詳細情報を表示
-    <aside className="absolute left-6 top-6 z-10 w-[360px] rounded-lg border border-slate-700 bg-slate-950/90 p-4 text-white shadow-xl">
+    <aside className="absolute left-6 top-6 z-10 w-[360px] rounded-lg border border-slate-700 bg-slate-950/90 p-4 text-white">
       <div className="flex items-start justify-between gap-4">
         <h2 className="text-lg font-semibold">{tleRecord.name}</h2>
         <IconButton label="閉じる" onClick={onClose}>

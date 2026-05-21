@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { DEFAULT_TLE_GROUP } from '../constants/celestrak';
 import type { TleRecord } from '../dataModel/tle';
 import { fetchTleRecords } from '../infrastructure/celestrakClient';
+import { TleGroupKey } from '../constants/tleGroups';
 
 type UseTleRecordsState = {
   records: TleRecord[];
@@ -10,7 +10,7 @@ type UseTleRecordsState = {
 };
 
 
-export function useTleRecords(group = DEFAULT_TLE_GROUP): UseTleRecordsState {
+export function useTleRecords(group : TleGroupKey): UseTleRecordsState {
   const [records, setRecords] = useState<TleRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
