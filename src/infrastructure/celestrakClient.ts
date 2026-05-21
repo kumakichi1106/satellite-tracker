@@ -1,8 +1,8 @@
-// 通信しすぎると403になってしまうのでモックデータで開発をすすめる
 import { CELESTRAK_BASE_URL } from '../constants/celestrak';
 import type { TleRecord } from '../dataModel/tle';
 import { mockStationsTleRecords } from './mockTleRecords';
 
+// CelesTrakは短時間の過剰アクセスでIP制限されるため、開発中はモックTLEを使用
 const USE_MOCK_TLE = true;
 
 type FetchTleRecordsParams = {
@@ -29,7 +29,7 @@ export async function fetchTleRecords({
 
   return parseTleText(tleText);
 }
-// CelesTrakのURLに値をセット関数
+
 function setTleUrl(group: string) {
   const url = new URL(CELESTRAK_BASE_URL);
   url.searchParams.set('GROUP', group);
@@ -46,8 +46,6 @@ function parseTleText(tleText: string): TleRecord[] {
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean);
-
-
 
   for (let index = 0; index < lines.length; index += 3) {
     const [name, line1, line2] = lines.slice(index, index + 3);
