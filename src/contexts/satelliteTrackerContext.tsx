@@ -81,7 +81,7 @@ export function useSatelliteTracker() {
     const context = useContext(SatelliteTrackerContext);
 
     if (!context) {
-        throw new Error;
+        throw new Error('Satellite tracker provider is missing');
     }
 
     return context;
