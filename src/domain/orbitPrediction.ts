@@ -12,11 +12,14 @@ type CalculateOrbitPredictionParams = {
     stepMinutes?: number;
 };
 
+const DEFAULT_ORBIT_DURATION_MINUTES = 90;
+const DEFAULT_ORBIT_STEP_MINUTES = 1;
+
 export function calculateOrbitPrediction({
     tleRecord,
     startDate = new Date(),
-    durationMinutes = 90,
-    stepMinutes = 1,
+    durationMinutes = DEFAULT_ORBIT_DURATION_MINUTES,
+    stepMinutes = DEFAULT_ORBIT_STEP_MINUTES,
 }: CalculateOrbitPredictionParams): OrbitPrediction {
     const points: OrbitPoint[] = [];
     // 開始時刻から指定分数まで、一定間隔で衛星位置を計算して軌道線用の点列を作る。

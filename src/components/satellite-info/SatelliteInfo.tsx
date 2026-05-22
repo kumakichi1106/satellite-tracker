@@ -3,25 +3,25 @@ import { CloseIcon } from '../icons';
 import { IconButton } from '../ui';
 
 type SatelliteInfoProps = {
-  satellites: TleRecordWithPosition | null;
+  satellite: TleRecordWithPosition | null;
   isLoading: boolean;
   errorMessage: string | null;
   onClose: () => void;
 };
 
 export function SatelliteInfo({
-  satellites,
+  satellite,
   isLoading,
   errorMessage,
   onClose
 }: SatelliteInfoProps) {
   if (isLoading) return <p className="statusText">Loading...</p>;
   if (errorMessage) return <p className="errorText">{errorMessage}</p>;
-  if (!satellites) return <aside className="absolute left-6 top-6 z-10 rounded-lg border border-slate-700 bg-slate-950/90 p-4 text-sm text-slate-300">
+  if (!satellite) return <aside className="absolute left-6 top-6 z-10 rounded-lg border border-slate-700 bg-slate-950/90 p-4 text-sm text-slate-300">
     衛星マーカーを選択すると詳細が表示されます。
   </aside>;
 
-  const { tleRecord, position } = satellites;
+  const { tleRecord, position } = satellite;
 
   return (
     // 衛星の詳細情報を表示

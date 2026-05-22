@@ -1,9 +1,11 @@
 import {
-    propagate, gstime, twoline2satrec,
-    eciToGeodetic, degreesLong, degreesLat, PositionAndVelocity
+  propagate,
+  gstime,
+  twoline2satrec,
+  eciToGeodetic,
+  degreesLong,
+  degreesLat,
 } from "satellite.js";
-
-
 import type { SatellitePosition } from '../dataModel/satellitePosition';
 import type { TleRecord } from '../dataModel/tle';
 
@@ -34,7 +36,7 @@ export function convertSatellitePositionToVector3({
   longitude,
   altitudeKm,
 }: SatellitePosition) {
-const earthRadiusKm = 6371;
+  const earthRadiusKm = 6371;
   const earthRadiusScene = 5;
 
   const radius = earthRadiusScene + (altitudeKm / earthRadiusKm) * earthRadiusScene;

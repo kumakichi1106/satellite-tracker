@@ -1,6 +1,6 @@
 import type { TleRecordWithPosition } from '../../dataModel/satellitePosition';
 import type { TleGroupKey } from '../../constants/tleGroups';
-import  { TleGroupSelector } from '../tle-group-selector/TleGroupSelector';
+import { TleGroupSelector } from '../tle-group-selector';
 
 type SatelliteListProps = {
 satellites: TleRecordWithPosition[];

@@ -6,7 +6,7 @@ export function SatelliteInfoContainer() {
 
   return (
     <SatelliteInfo
-      satellites={selectedSatellite}
+      satellite={selectedSatellite}
       isLoading={isLoading}
       errorMessage={errorMessage}
       onClose={clearSelectedSatellite}
