@@ -9,19 +9,25 @@ import { useTleRecords } from '../hooks/useTleRecords';
 import { useSatellitePositions } from '../hooks/useSatellitePositions';
 import { useCurrentTime } from '../hooks/useCurrentTime';
 import { useOrbitPrediction } from '../hooks/useOrbitPrediction';
+import { useVisibleTleRecords } from '../hooks/useVisibleTleRecords';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 import type { OrbitPrediction } from '../dataModel/orbitPrediction';
 import type { TleGroupKey } from '../constants/tleGroups';
 
 type SatelliteTrackerContextValue = {
-    satellites: TleRecordWithPosition[];
     selectedSatellite: TleRecordWithPosition | null;
     selectedSatelliteName: string | null;
     selectedOrbitPrediction: OrbitPrediction | null;
     selectedTleGroup: TleGroupKey;
+    satelliteSearchText: string;
+    visibleSatellites: TleRecordWithPosition[];
+    filteredSatelliteCount: number;
+    totalSatelliteCount: number;
+    visibleSatelliteLimit: number;
+    setSatelliteSearchText: (text: string) => void;
     selectSatellite: (name: string) => void;
     clearSelectedSatellite: () => void;
-    setSelectedTleGroup: (group: TleGroupKey) => void;
+    changeTleGroup: (group: TleGroupKey) => void;
     isLoading: boolean;
     errorMessage: string | null;
 };
@@ -35,37 +41,57 @@ const SatelliteTrackerContext = createContext<SatelliteTrackerContextValue | nul
 export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderProps) {
     const currentTime = useCurrentTime(1000);
     const [selectedTleGroup, setSelectedTleGroup] = useState<TleGroupKey>('stations');
-    const { records, isLoading, errorMessage } = useTleRecords(selectedTleGroup);
-    // CurrentTimeで都度衛星の位置を計算する
-    const satellites = useSatellitePositions(records, currentTime);
-    // 選択された衛星の状態管理
     const [selectedSatelliteName, setSelectedSatelliteName] = useState<string | null>(null);
+    const [satelliteSearchText, setSatelliteSearchText] = useState('');
+    const { records, isLoading, errorMessage } = useTleRecords(selectedTleGroup);
 
-    // 衛星を選択
+    const {
+        visibleRecords,
+        filteredRecordCount,
+        totalRecordCount,
+        visibleRecordLimit,
+    } = useVisibleTleRecords({
+        records,
+        searchText: satelliteSearchText,
+    });
+
+    const visibleSatellites = useSatellitePositions(visibleRecords, currentTime);
+
     const selectSatellite = (name: string) => {
         setSelectedSatelliteName(name);
     };
-    // 選択をクリア
+
     const clearSelectedSatellite = () => {
         setSelectedSatelliteName(null);
     };
 
+    const changeTleGroup = (group: TleGroupKey) => {
+        setSelectedTleGroup(group);
+        setSatelliteSearchText('');
+        clearSelectedSatellite();
+    };
+
     const selectedSatellite = useMemo(
-        () => satellites.find(({ tleRecord }) => tleRecord.name === selectedSatelliteName) ?? null,
-        [satellites, selectedSatelliteName],
+        () => visibleSatellites.find(({ tleRecord }) => tleRecord.name === selectedSatelliteName) ?? null,
+        [visibleSatellites, selectedSatelliteName],
     );
 
     const selectedOrbitPrediction = useOrbitPrediction(selectedSatellite);
 
     const value: SatelliteTrackerContextValue = {
-        satellites,
+        visibleSatellites,
         selectedSatellite,
         selectedSatelliteName,
         selectedOrbitPrediction,
         selectedTleGroup,
-        setSelectedTleGroup,
+        satelliteSearchText,
+        filteredSatelliteCount: filteredRecordCount,
+        totalSatelliteCount: totalRecordCount,
+        visibleSatelliteLimit: visibleRecordLimit,
+        setSatelliteSearchText,
         selectSatellite,
         clearSelectedSatellite,
+        changeTleGroup,
         isLoading,
         errorMessage,
     };
