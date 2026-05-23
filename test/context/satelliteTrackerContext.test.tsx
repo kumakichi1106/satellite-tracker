@@ -57,8 +57,8 @@ describe('SatelliteTrackerContext', () => {
     it('Provider配下で衛星データを取得できる', () => {
         const { result } = renderHook(() => useSatelliteTracker(), { wrapper });
 
-        expect(result.current.satellites).toHaveLength(1);
-        expect(result.current.satellites[0]?.tleRecord.name).toBe('ISS (ZARYA)');
+        expect(result.current.visibleSatellites).toHaveLength(1);
+        expect(result.current.visibleSatellites[0]?.tleRecord.name).toBe('ISS (ZARYA)');
         expect(result.current.isLoading).toBe(false);
         expect(result.current.errorMessage).toBeNull();
     });
