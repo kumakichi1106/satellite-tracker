@@ -3,20 +3,30 @@ import { SatelliteList } from './SatelliteList';
 
 export function SatelliteListContainer() {
   const {
-    satellites,
     selectedSatelliteName,
     selectedTleGroup,
+    visibleSatellites,
+    satelliteSearchText,
+    filteredSatelliteCount,
+    totalSatelliteCount,
+    visibleSatelliteLimit,
     selectSatellite,
-    setSelectedTleGroup,
+    setSatelliteSearchText,
+    changeTleGroup,
   } = useSatelliteTracker();
 
   return (
     <SatelliteList
-      satellites={satellites}
       selectedSatelliteName={selectedSatelliteName}
       selectedTleGroup={selectedTleGroup}
+      satellites={visibleSatellites}
+      satelliteSearchText={satelliteSearchText}
+      filteredSatelliteCount={filteredSatelliteCount}
+      totalSatelliteCount={totalSatelliteCount}
+      visibleSatelliteLimit={visibleSatelliteLimit}
       onSelectSatellite={selectSatellite}
-      onChangeTleGroup={setSelectedTleGroup}
+      onChangeSatelliteSearchText={setSatelliteSearchText}
+      onChangeTleGroup={changeTleGroup}
     />
   );
 }

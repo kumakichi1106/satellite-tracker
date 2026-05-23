@@ -3,18 +3,18 @@ import { useSatelliteTracker } from '../../contexts/satelliteTrackerContext';
 
 export function EarthViewerContainer() {
   const {
-    satellites,
     selectedSatelliteName,
     selectedOrbitPrediction,
+    visibleSatellites,
     selectSatellite,
     clearSelectedSatellite
   } = useSatelliteTracker();
 
   return <EarthViewer
-      satellites={satellites}
-      selectedSatelliteName={selectedSatelliteName}
-      onSelectSatellite={selectSatellite}
-      onClearSelectedSatellite={clearSelectedSatellite}
-      selectedOrbitPrediction={selectedOrbitPrediction}
-  />;
+    satellites={visibleSatellites}
+    selectedSatelliteName={selectedSatelliteName}
+    selectedOrbitPrediction={selectedOrbitPrediction}
+    onSelectSatellite={selectSatellite}
+    onClearSelectedSatellite={clearSelectedSatellite}
+  />
 }
