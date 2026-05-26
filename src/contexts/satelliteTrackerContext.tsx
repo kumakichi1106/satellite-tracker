@@ -10,8 +10,10 @@ import { useSatellitePositions } from '../hooks/useSatellitePositions';
 import { useCurrentTime } from '../hooks/useCurrentTime';
 import { useOrbitPrediction } from '../hooks/useOrbitPrediction';
 import { useVisibleTleRecords } from '../hooks/useVisibleTleRecords';
+import { useSatelliteVisibility } from '../hooks/useSatelliteVisibility';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 import type { OrbitPrediction } from '../dataModel/orbitPrediction';
+import type { SatelliteVisibility } from '../dataModel/visibility';
 import type { TleGroupKey } from '../constants/tleGroups';
 
 type SatelliteTrackerContextValue = {
@@ -24,6 +26,7 @@ type SatelliteTrackerContextValue = {
     filteredSatelliteCount: number;
     totalSatelliteCount: number;
     visibleSatelliteLimit: number;
+    selectedSatelliteVisibility: SatelliteVisibility | null;
     setSatelliteSearchText: (text: string) => void;
     selectSatellite: (name: string) => void;
     clearSelectedSatellite: () => void;
@@ -56,27 +59,29 @@ export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderP
     });
 
     const visibleSatellites = useSatellitePositions(visibleRecords, currentTime);
-
+    
     const selectSatellite = (name: string) => {
         setSelectedSatelliteName(name);
     };
-
+    
     const clearSelectedSatellite = () => {
         setSelectedSatelliteName(null);
     };
-
+    
     const changeTleGroup = (group: TleGroupKey) => {
         setSelectedTleGroup(group);
         setSatelliteSearchText('');
         clearSelectedSatellite();
     };
-
+    
     const selectedSatellite = useMemo(
         () => visibleSatellites.find(({ tleRecord }) => tleRecord.name === selectedSatelliteName) ?? null,
         [visibleSatellites, selectedSatelliteName],
     );
-
+    
     const selectedOrbitPrediction = useOrbitPrediction(selectedSatellite);
+    
+    const selectedSatelliteVisibility = useSatelliteVisibility(selectedSatellite, currentTime);
 
     const value: SatelliteTrackerContextValue = {
         visibleSatellites,
@@ -88,6 +93,7 @@ export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderP
         filteredSatelliteCount: filteredRecordCount,
         totalSatelliteCount: totalRecordCount,
         visibleSatelliteLimit: visibleRecordLimit,
+        selectedSatelliteVisibility,
         setSatelliteSearchText,
         selectSatellite,
         clearSelectedSatellite,
