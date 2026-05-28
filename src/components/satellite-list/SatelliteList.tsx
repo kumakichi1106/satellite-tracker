@@ -28,12 +28,11 @@ export function SatelliteList({
   onChangeSatelliteSearchText,
 }: SatelliteListProps) {
   return (
-    <aside className="absolute bottom-6 left-4 z-10 w-[360px] h-[550px] rounded-lg border border-slate-700 bg-slate-950/90 p-4 text-white">
+    <section className="flex min-h-0 flex-1 flex-col rounded-lg border border-slate-700 bg-slate-950/90 p-4">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-sm font-semibold text-slate-200">衛星リスト</h2>
         <span className="text-sm text-slate-400">{totalSatelliteCount}機</span>
       </div>
-
       <div className="mt-3">
         <TleGroupSelector
           selectedTleGroup={selectedTleGroup}
@@ -60,7 +59,7 @@ export function SatelliteList({
           描画負荷を抑えるため、{filteredSatelliteCount}件中{satellites.length}件のみ表示しています。
         </p>
       )}
-      <div className="mt-3 max-h-[280px] space-y-1 overflow-y-auto px-1 pr-4">
+      <div className="mt-3 min-h-0 flex-1 space-y-1 overflow-y-auto px-1 pr-4">
         {satellites.map(({ tleRecord }) => {
           const isSelected = tleRecord.name === selectedSatelliteName;
 
@@ -81,6 +80,6 @@ export function SatelliteList({
           );
         })}
       </div>
-    </aside>
+    </section>
   );
 }
