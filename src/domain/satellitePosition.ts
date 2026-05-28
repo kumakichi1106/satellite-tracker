@@ -42,7 +42,7 @@ export function convertSatellitePositionToVector3({
   const radius = earthRadiusScene + (altitudeKm / earthRadiusKm) * earthRadiusScene;
 
   const lat = (latitude * Math.PI) / 180;
-  const lon = (longitude * Math.PI) / 180;
+  const lon = ((longitude + 90) * Math.PI) / 180;
 
   return {
     x: radius * Math.cos(lat) * Math.sin(lon),
