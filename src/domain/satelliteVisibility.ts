@@ -62,7 +62,7 @@ type VisibilitySearchParams = {
 };
 
 // 指定時刻における、地上局から見た衛星の方位角・仰角・距離を計算する
-function calculateLookAngle({
+export function calculateLookAngle({
     tleRecord,
     groundStation,
     date = new Date(),
@@ -93,7 +93,7 @@ function calculateLookAngle({
 }
 
 // 仰角が0度を超えていれば、地上局の地平線より上にあるとみなす
-function isVisibleFromGroundStation(lookAngle: LookAngle | null): boolean {
+export function isVisibleFromGroundStation(lookAngle: LookAngle | null): boolean {
     return lookAngle !== null && lookAngle.elevationDeg > VISIBLE_ELEVATION_THRESHOLD_DEG;
 }
 
