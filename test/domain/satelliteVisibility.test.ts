@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
     calculateCurrentVisibility,
     calculateLookAngle,
+    calculateNextVisibilityWindow,
     isVisibleFromGroundStation,
 } from '../../src/domain/satelliteVisibility';
 import type { GroundStation } from '../../src/dataModel/groundStation';
@@ -67,5 +68,47 @@ describe('satelliteVisibility', () => {
         expect(visibility.nextWindow.aos.getTime()).toBeLessThan(visibility.nextWindow.los.getTime());
         expect(visibility.nextWindow.maxElevationDeg).toBeGreaterThan(0);
         expect(visibility.nextWindow.durationMinutes).toBeGreaterThan(0);
+    });
+
+    it('現在可視中の場合は現在の通過のAOS/LOSを計算できる', () => {
+        const nextWindow = calculateNextVisibilityWindow({
+            tleRecord: cygfm05,
+            groundStation,
+            startDate: new Date('2026-05-21T03:50:00.000Z'),
+        });
+
+        if (!nextWindow) {
+            throw new Error('Expected next visibility window');
+        }
+
+        const currentVisibleDate = new Date(
+            Math.floor(((nextWindow.aos.getTime() + nextWindow.los.getTime()) / 2) / 60_000) * 60_000,
+        );
+
+        const visibilityWindow = calculateNextVisibilityWindow({
+            tleRecord: cygfm05,
+            groundStation,
+            startDate: currentVisibleDate,
+        });
+
+        if (!visibilityWindow) {
+            throw new Error('Expected current visibility window');
+        }
+
+        expect(visibilityWindow.aos.getTime()).toBeLessThanOrEqual(currentVisibleDate.getTime());
+        expect(visibilityWindow.los.getTime()).toBeGreaterThanOrEqual(currentVisibleDate.getTime());
+        expect(visibilityWindow.maxElevationDeg).toBeGreaterThan(0);
+        expect(visibilityWindow.durationMinutes).toBeGreaterThan(0);
+    });
+
+    it('指定範囲内に可視時間帯がない場合はnullを返す', () => {
+        const visibilityWindow = calculateNextVisibilityWindow({
+            tleRecord: cygfm05,
+            groundStation,
+            startDate: new Date('2026-05-21T00:00:00.000Z'),
+            searchMinutes: 1,
+        });
+
+        expect(visibilityWindow).toBeNull();
     });
 });
