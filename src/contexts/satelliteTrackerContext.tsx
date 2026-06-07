@@ -11,10 +11,12 @@ import { useCurrentTime } from '../hooks/useCurrentTime';
 import { useOrbitPrediction } from '../hooks/useOrbitPrediction';
 import { useVisibleTleRecords } from '../hooks/useVisibleTleRecords';
 import { useSatelliteVisibility } from '../hooks/useSatelliteVisibility';
+import { DEFAULT_GROUND_STATION } from '../constants/groundStations';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 import type { OrbitPrediction } from '../dataModel/orbitPrediction';
 import type { SatelliteVisibility } from '../dataModel/visibility';
 import type { TleGroupKey } from '../constants/tleGroups';
+import type { GroundStation } from '../dataModel/groundStation';
 
 type SatelliteTrackerContextValue = {
     selectedSatellite: TleRecordWithPosition | null;
@@ -27,6 +29,7 @@ type SatelliteTrackerContextValue = {
     totalSatelliteCount: number;
     visibleSatelliteLimit: number;
     selectedSatelliteVisibility: SatelliteVisibility | null;
+    groundStation: GroundStation;
     setSatelliteSearchText: (text: string) => void;
     selectSatellite: (name: string) => void;
     clearSelectedSatellite: () => void;
@@ -94,6 +97,7 @@ export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderP
         totalSatelliteCount: totalRecordCount,
         visibleSatelliteLimit: visibleRecordLimit,
         selectedSatelliteVisibility,
+        groundStation: DEFAULT_GROUND_STATION,
         setSatelliteSearchText,
         selectSatellite,
         clearSelectedSatellite,
