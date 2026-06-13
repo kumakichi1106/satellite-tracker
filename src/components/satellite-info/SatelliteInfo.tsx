@@ -1,5 +1,7 @@
 import type { TleRecordWithPosition } from '../../dataModel/satellitePosition';
+import { TleEpochInfo } from '../../dataModel/tleEpoch';
 import { SatelliteVisibility } from '../../dataModel/visibility';
+import { formatTleAge } from '../../utils/formatTleAge';
 import { CloseIcon } from '../icons';
 import { IconButton } from '../ui';
 
@@ -8,6 +10,7 @@ type SatelliteInfoProps = {
   visibility: SatelliteVisibility | null;
   isLoading: boolean;
   errorMessage: string | null;
+  tleEpochInfo: TleEpochInfo | null;
   onClose: () => void;
 };
 
@@ -16,6 +19,7 @@ export function SatelliteInfo({
   visibility,
   isLoading,
   errorMessage,
+  tleEpochInfo,
   onClose
 }: SatelliteInfoProps) {
   if (isLoading) return <p className="statusText">Loading...</p>;
@@ -55,7 +59,31 @@ export function SatelliteInfo({
       ) : (
         <p className="mt-4 text-sm text-slate-300">位置情報を取得できません。</p>
       )}
+      <section className="mt-4 border-t border-slate-800 pt-4">
+        <h3 className="text-sm font-semibold text-slate-200">TLE情報</h3>
 
+        {tleEpochInfo ? (
+          <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <dt className="text-slate-400">基準日時</dt>
+              <dd className="mt-1 font-semibold">
+                {tleEpochInfo.epoch.toLocaleString()}
+              </dd>
+            </div>
+
+            <div>
+              <dt className="text-slate-400">経過時間</dt>
+              <dd className="mt-1 font-semibold">
+                {formatTleAge(tleEpochInfo.ageMinutes)}
+              </dd>
+            </div>
+          </dl>
+        ) : (
+          <p className="mt-3 text-sm text-slate-400">
+            TLE epochを解析できません。
+          </p>
+        )}
+      </section>
       {visibility && (
         <section className="mt-4 border-t border-slate-800 pt-4">
           <h3 className="text-sm font-semibold text-slate-200">地上局からの可視状態</h3>
