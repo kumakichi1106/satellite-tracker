@@ -1,4 +1,5 @@
 import { SatelliteInfo } from './SatelliteInfo';
+import { getTleEpochInfo } from '../../domain/tleEpoch';
 import { useSatelliteTracker } from '../../contexts/satelliteTrackerContext';
 
 export function SatelliteInfoContainer() {
@@ -10,12 +11,17 @@ export function SatelliteInfoContainer() {
     clearSelectedSatellite
   } = useSatelliteTracker();
 
+  const tleEpochInfo = selectedSatellite
+    ? getTleEpochInfo(selectedSatellite.tleRecord.line1)
+    : null;
+
   return (
     <SatelliteInfo
       satellite={selectedSatellite}
       visibility={selectedSatelliteVisibility}
       isLoading={isLoading}
       errorMessage={errorMessage}
+      tleEpochInfo={tleEpochInfo}
       onClose={clearSelectedSatellite}
     />
   );
