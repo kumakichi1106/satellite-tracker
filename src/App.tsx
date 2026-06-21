@@ -13,10 +13,10 @@ export function App() {
           <>
             <GroundStationInfoContainer />
             <SatelliteListContainer />
-            <SatelliteInfoContainer />
           </>
         }
         main={<EarthViewerContainer />}
+        detail={<SatelliteInfoContainer />}
       />
     </SatelliteTrackerProvider>
   );
