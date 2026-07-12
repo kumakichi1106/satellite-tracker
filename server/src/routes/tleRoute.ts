@@ -9,14 +9,25 @@ export async function tleRoute(app: FastifyInstance) {
 
         if (!queryResult.success) {
             return reply.status(400).send({
-                message: 'Invalid TLE group',
+                error: {
+                    code: 'INVALID_TLE_GROUP',
+                    message: '指定されたTLEグループは利用できません',
+                },
             });
         }
+        try {
+            const response = await getTleRecords({
+                group: queryResult.data.group,
+            });
 
-        const records = await getTleRecords({
-            group: queryResult.data.group,
-        });
-
-        return reply.send(records);
+            return reply.send(response);
+        } catch {
+            return reply.status(502).send({
+                error: {
+                    code: 'TLE_FETCH_FAILED',
+                    message: 'TLEデータを取得できませんでした',
+                },
+            });
+        }
     });
 }

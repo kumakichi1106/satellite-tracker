@@ -15,7 +15,10 @@ describe('tleRoute', () => {
 
         expect(response.statusCode).toBe(400);
         expect(response.json()).toEqual({
-            message: 'Invalid TLE group',
+            error: {
+                code: 'INVALID_TLE_GROUP',
+                message: '指定されたTLEグループは利用できません',
+            },
         });
 
         await app.close();
