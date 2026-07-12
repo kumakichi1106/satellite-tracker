@@ -32,6 +32,10 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Install server dependencies
+        working-directory: server
+        run: yarn install
+
       - name: Test
         run: yarn test:run
 
