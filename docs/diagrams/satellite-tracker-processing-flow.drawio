@@ -1,0 +1,191 @@
+<mxfile host="Electron" agent="Codex">
+  <diagram id="satellite-tracker-flow" name="Satellite Tracker 処理フロー">
+    <mxGraphModel dx="1814" dy="1075" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=26;fontStyle=1;fontColor=#111827;" value="Satellite Tracker 処理フロー" vertex="1">
+          <mxGeometry height="50" width="600" x="500" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="source-lane" parent="1" style="swimlane;html=1;horizontal=0;startSize=34;rounded=0;fillColor=#F8FAFC;swimlaneFillColor=#FFFFFF;strokeColor=#CBD5E1;fontSize=14;fontStyle=1;fontColor=#334155;" value="データ入力" vertex="1">
+          <mxGeometry height="750" width="270" x="30" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ground-station" parent="source-lane" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="地上局情報&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;緯度 / 経度 / 高度&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="35" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="tle-options" parent="source-lane" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;fontSize=14;fontStyle=1;fontColor=#0F172A;" value="TLEグループ・検索条件&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;stations / weather / gps-ops / active&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="35" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="current-time" parent="source-lane" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="現在時刻&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;1秒ごとに更新&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="35" y="245" as="geometry" />
+        </mxCell>
+        <mxCell id="processing-lane" parent="1" style="swimlane;html=1;horizontal=0;startSize=34;rounded=0;fillColor=#F8FAFC;swimlaneFillColor=#FFFFFF;strokeColor=#CBD5E1;fontSize=14;fontStyle=1;fontColor=#334155;" value="状態管理・計算" vertex="1">
+          <mxGeometry height="750" width="790" x="330" y="90" as="geometry">
+            <mxRectangle height="130" width="40" x="330" y="90" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="selected" parent="processing-lane" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="衛星選択状態&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;一覧またはマーカーをクリック&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="240" x="210" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="view-lane" parent="1" style="swimlane;html=1;horizontal=0;startSize=34;rounded=0;fillColor=#F8FAFC;swimlaneFillColor=#FFFFFF;strokeColor=#CBD5E1;fontSize=14;fontStyle=1;fontColor=#334155;" value="画面表示" vertex="1">
+          <mxGeometry height="750" width="420" x="1150" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tle-source" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="TLEデータソース&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Mock / Backend API / CelesTrak&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="200" x="65" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="records" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="TLEレコード一覧&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;name / line1 / line2&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="210" x="375" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="visible-records" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="検索・表示件数制限&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;計算・描画対象を絞る&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="210" x="650" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="position" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#7C3AED;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="衛星位置計算&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;satellite.js&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="180" x="905" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="geodetic" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#7C3AED;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="地理座標&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;緯度 / 経度 / 高度&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="540" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="vector" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#7C3AED;fontSize=14;fontStyle=1;fontColor=#0F172A;" value="3D座標変換&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;latitude / longitude / altitude → Vector3&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="805" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="orbit" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#7C3AED;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="軌道予測&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;未来時刻の衛星位置を計算&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="230" x="390" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="visibility" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#7C3AED;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="地上局からの可視計算&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;仰角 / 方位角 / 距離 / AOS / LOS&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="270" x="750" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="earth-viewer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#2563EB;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="3D地球・衛星マーカー&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;React Three Fiber&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="290" x="1215" y="245" as="geometry" />
+        </mxCell>
+        <mxCell id="list-view" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#2563EB;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="衛星一覧&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;グループ選択 / 検索 / 衛星選択&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="290" x="1215" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="orbit-line" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#2563EB;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="予測軌道ライン" vertex="1">
+          <mxGeometry height="65" width="290" x="1215" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="satellite-info" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#2563EB;fontSize=15;fontStyle=1;fontColor=#0F172A;" value="衛星詳細パネル&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;位置 / TLE情報 / 地上局からの可視状態&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="290" x="1215" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="e-source-records" edge="1" parent="1" source="tle-source" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="records" value="取得・解析">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-records-visible" edge="1" parent="1" source="records" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;" target="visible-records" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-options-visible" edge="1" parent="1" source="tle-options" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#64748B;fontSize=12;dashed=1;" target="visible-records" value="条件">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="285" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-visible-position" edge="1" parent="1" source="visible-records" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="position" value="対象TLE">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-time-position" edge="1" parent="1" source="current-time" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#D97706;fontSize=12;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="position" value="計算時刻">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="370" />
+              <mxPoint x="1095" y="370" />
+              <mxPoint x="1095" y="182" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-position-geodetic" edge="1" parent="1" source="position" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="geodetic" value="">
+          <mxGeometry relative="1" x="-0.0021" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="995" y="250" />
+              <mxPoint x="640" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-geodetic-vector" edge="1" parent="1" source="geodetic" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;" target="vector" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-vector-earth" edge="1" parent="1" source="vector" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="earth-viewer" value="Vector3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1060" y="320" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-visible-list" edge="1" parent="1" source="visible-records" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="list-view" value="一覧表示">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="755" y="115" />
+              <mxPoint x="1185" y="115" />
+              <mxPoint x="1185" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-list-selected" edge="1" parent="1" source="list-view" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=12;" target="selected" value="選択">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1175" y="170" />
+              <mxPoint x="1175" y="380" />
+              <mxPoint x="920" y="380" />
+              <mxPoint x="660" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-earth-selected" edge="1" parent="1" source="earth-viewer" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=12;" target="selected" value="マーカー選択">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1185" y="285" />
+              <mxPoint x="1185" y="395" />
+              <mxPoint x="660" y="395" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-selected-orbit" edge="1" parent="1" source="selected" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="orbit" value="選択TLE">
+          <mxGeometry relative="1" x="0.2987" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-selected-visibility" edge="1" parent="1" source="selected" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="visibility" value="選択TLE">
+          <mxGeometry relative="1" x="0.4044" y="6" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-ground-visibility" edge="1" parent="1" source="ground-station" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#D97706;fontSize=12;dashed=1;" target="visibility" value="観測地点">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-time-visibility" edge="1" parent="1" source="current-time" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#D97706;fontSize=12;dashed=1;" target="visibility" value="現在時刻">
+          <mxGeometry relative="1" x="-0.5419" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="165" y="500" />
+              <mxPoint x="885" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-orbit-line" edge="1" parent="1" source="orbit" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="orbit-line" value="予測点列">
+          <mxGeometry relative="1" x="0.351" y="-5" as="geometry">
+            <mxPoint x="-1" as="offset" />
+            <Array as="points">
+              <mxPoint x="505" y="535" />
+              <mxPoint x="1185" y="535" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-line-earth" edge="1" parent="1" source="orbit-line" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#64748B;fontSize=12;dashed=1;" target="earth-viewer" value="3D描画">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-selected-info" edge="1" parent="1" source="selected" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#64748B;fontSize=12;dashed=1;" target="satellite-info" value="位置・TLE情報">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="660" y="760" />
+              <mxPoint x="1185" y="760" />
+              <mxPoint x="1185" y="675" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-visibility-info" edge="1" parent="1" source="visibility" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#334155;fontSize=12;" target="satellite-info" value="可視状態・通過時間帯">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontColor=#475569;" value="青: 入力・画面&lt;div&gt;緑: 状態・対象データ&lt;/div&gt;&lt;div&gt;紫: domain計算&lt;/div&gt;&lt;div&gt;黄: 時刻・地上局&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="900" x="30" y="850" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
