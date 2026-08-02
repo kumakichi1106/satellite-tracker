@@ -28,6 +28,9 @@ TLE解析、衛星位置計算、地上局からの可視判定、3D可視化、
 - 衛星名検索
 - 表示件数制限による描画負荷の抑制
 - CelesTrakの過剰アクセス制限を避けるためのモックTLE対応
+- TLEデータの基準時刻表示
+- TLE取得結果のキャッシュ(server側で実施)
+
 
 ## デモ
 
@@ -95,6 +98,14 @@ src/
 - CelesTrak GP data
 - Vitest
 
+## 処理フロー
+
+TLEデータの取得から衛星位置計算、3D描画、軌道予測、地上局からの可視時間帯計算までの流れを示します。
+
+![Satellite Tracker 処理フロー](./docs/images/satellite-tracker-processing-flow.png)
+
+編集用ファイル：[draw.io形式](./docs/diagrams/satellite-tracker-processing-flow.drawio)
+
 ## Notes
 
 現在はCelesTrakへの過剰アクセスを避けるため、モックTLEデータを利用しています。
@@ -110,10 +121,6 @@ src/
 
 ## Future Work
 
-- TLE取得結果のキャッシュ
-- TLEデータの基準時刻表示
 - 選択衛星へのカメラフォーカス
-- 地上局・観測地点の追加
 - 観測地点ごとの衛星可視予測
-- 最低仰角を考慮した実用上の可視判定
-- エラー状態・空状態の表示改善
+- 衛星軌道変更シミュレーター
