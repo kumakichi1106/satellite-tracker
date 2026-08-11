@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { GROUND_STATIONS } from '../constants/groundStations';
 import type { SatelliteVisibility } from '../dataModel/visibility';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 import { calculateCurrentVisibility } from '../domain/satelliteVisibility';
