@@ -11,7 +11,7 @@ import { useCurrentTime } from '../hooks/useCurrentTime';
 import { useOrbitPrediction } from '../hooks/useOrbitPrediction';
 import { useVisibleTleRecords } from '../hooks/useVisibleTleRecords';
 import { useSatelliteVisibility } from '../hooks/useSatelliteVisibility';
-import { DEFAULT_GROUND_STATION } from '../constants/groundStations';
+import { GROUND_STATIONS } from '../constants/groundStations';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 import type { OrbitPrediction } from '../dataModel/orbitPrediction';
 import type { SatelliteVisibility } from '../dataModel/visibility';
@@ -34,6 +34,7 @@ type SatelliteTrackerContextValue = {
     selectSatellite: (name: string) => void;
     clearSelectedSatellite: () => void;
     changeTleGroup: (group: TleGroupKey) => void;
+    changeGroundStation: (id: string) => void;
     isLoading: boolean;
     errorMessage: string | null;
 };
@@ -62,29 +63,47 @@ export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderP
     });
 
     const visibleSatellites = useSatellitePositions(visibleRecords, currentTime);
-    
+
     const selectSatellite = (name: string) => {
         setSelectedSatelliteName(name);
     };
-    
+
     const clearSelectedSatellite = () => {
         setSelectedSatelliteName(null);
     };
-    
+
     const changeTleGroup = (group: TleGroupKey) => {
         setSelectedTleGroup(group);
         setSatelliteSearchText('');
         clearSelectedSatellite();
     };
-    
+
     const selectedSatellite = useMemo(
         () => visibleSatellites.find(({ tleRecord }) => tleRecord.name === selectedSatelliteName) ?? null,
         [visibleSatellites, selectedSatelliteName],
     );
-    
+
     const selectedOrbitPrediction = useOrbitPrediction(selectedSatellite);
-    
-    const selectedSatelliteVisibility = useSatelliteVisibility(selectedSatellite, currentTime);
+    const [groundStation, setGroundStation] = useState<GroundStation>(
+        GROUND_STATIONS[0],
+    );
+
+    const changeGroundStation = (id: string) => {
+        const nextGroundStation = GROUND_STATIONS.find(
+            (station) => station.id === id,
+        );
+
+        if (!nextGroundStation) {
+            return;
+        }
+
+        setGroundStation(nextGroundStation);
+    };
+
+
+    const selectedSatelliteVisibility = useSatelliteVisibility(selectedSatellite, groundStation, currentTime);
+
+
 
     const value: SatelliteTrackerContextValue = {
         visibleSatellites,
@@ -97,11 +116,12 @@ export function SatelliteTrackerProvider({ children }: SatelliteTrackerProviderP
         totalSatelliteCount: totalRecordCount,
         visibleSatelliteLimit: visibleRecordLimit,
         selectedSatelliteVisibility,
-        groundStation: DEFAULT_GROUND_STATION,
+        groundStation,
         setSatelliteSearchText,
         selectSatellite,
         clearSelectedSatellite,
         changeTleGroup,
+        changeGroundStation,
         isLoading,
         errorMessage,
     };

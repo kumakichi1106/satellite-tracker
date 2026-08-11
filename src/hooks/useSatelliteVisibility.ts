@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { DEFAULT_GROUND_STATION } from '../constants/groundStations';
 import type { SatelliteVisibility } from '../dataModel/visibility';
 import type { TleRecordWithPosition } from '../dataModel/satellitePosition';
 import { calculateCurrentVisibility } from '../domain/satelliteVisibility';
+import { GroundStation } from '../dataModel/groundStation';
 
 export function useSatelliteVisibility(
     selectedSatellite: TleRecordWithPosition | null,
+    groundStation: GroundStation,
     currentTime: Date,
 ): SatelliteVisibility | null {
     return useMemo(() => {
@@ -15,8 +16,8 @@ export function useSatelliteVisibility(
 
         return calculateCurrentVisibility({
             tleRecord: selectedSatellite.tleRecord,
-            groundStation: DEFAULT_GROUND_STATION,
+            groundStation,
             date: currentTime,
         });
-    }, [selectedSatellite, currentTime]);
+    }, [selectedSatellite, groundStation, currentTime]);
 }
