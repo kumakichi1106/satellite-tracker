@@ -88,4 +88,27 @@ describe('SatelliteTrackerContext', () => {
         expect(result.current.selectedSatelliteName).toBeNull();
         expect(result.current.selectedSatellite).toBeNull();
     });
+
+    it('changeGroundStationで選択中地上局を変更できる', () => {
+        const { result } = renderHook(() => useSatelliteTracker(), { wrapper });
+
+        expect(result.current.groundStation.id).toBe('hiyoshi');
+
+        act(() => {
+            result.current.changeGroundStation('sapporo');
+        });
+
+        expect(result.current.groundStation.id).toBe('sapporo');
+        expect(result.current.groundStation.name).toBe('札幌');
+    });
+
+    it('存在しない地上局IDでは選択状態を変更しない', () => {
+        const { result } = renderHook(() => useSatelliteTracker(), { wrapper });
+
+        act(() => {
+            result.current.changeGroundStation('invalid');
+        });
+
+        expect(result.current.groundStation.id).toBe('hiyoshi');
+    });
 });
